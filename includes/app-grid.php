@@ -15,7 +15,7 @@
 					<li>
 						<a href="<?php the_permalink(); ?>">
 							<span class="inner">
-								<span class="image"><?php echo the_post_thumbnail(); ?></span>
+								<span class="image"><?php echo the_post_thumbnail('square_thumb'); ?></span>
 								<span class="title"><?php the_title(); ?></span>
 								<span class="date"><?php the_time('jS F Y'); ?></span>
 							</span>
