@@ -49,6 +49,7 @@
 		),
 		'description'		=> '', //description of post type
 		'public'			=> true, //can the public see it?
+		'publicly_queriable'=> true,
 		'show_ui'			=> true, //generate UI for custom management
 		'capability_type'	=> '',
 	);
@@ -84,6 +85,7 @@
 		),
 		'description'		=> '', //description of post type
 		'public'			=> true, //can the public see it?
+		'publicly_queriable'=> true,
 		'show_ui'			=> true, //generate UI for custom management
 		'capability_type'	=> '',
 	);
@@ -135,17 +137,7 @@
 	}
 	
 	$theme_options_args = array(
-		'Main Test Area' => array(
-			array(
-				'name' => 'default text',
-				'type' => 'text',
-				'desc' => 'Here is some text bitch'
-			),
-			array(
-				'name' => 'default text NEW',
-				'type' => 'text',
-				'desc' => 'SOMWE MORE TEST NIGGERSSSS'
-			),
+		'Tags' => array(
 			array(
 				'name' => 'Tag Selection',
 				'type' => 'freeform'

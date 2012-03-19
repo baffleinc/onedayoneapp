@@ -157,6 +157,7 @@
 	border-radius: 5px;
 	border: 1px solid #ddd;
 	width: 500px;
+	min-height: 50px;
 }
 
 .tag-bay li{color: #3781a9;}
@@ -189,6 +190,8 @@
 	background-color: #f8f8f8;
 	width: 500px;
 	position: relative;
+	min-height: 50px;
+	-webkit-transition: all 0.3s linear;
 }
 
 .tags-loading{
@@ -209,6 +212,27 @@
 	top: -38px;
 	left: 80px;
 
+}
+
+
+
+ul.empty:after{
+	display: inline-block;
+	padding: 5px 10px;
+	margin: 10px 0;
+	border: 3px dashed #ddd;
+	border-radius: 5px;
+	box-shadow: none!important;
+	color: #ccc;
+	font-weight: bold;
+}
+
+ul.empty.tag-bay-list:after{
+	content: "No tags available";
+}
+
+ul.empty.active-tags-list:after{
+	content: "Drag tags here!";
 }
 
 .clearfix{

@@ -15,7 +15,10 @@ function change_single_comment_number($content){
 function change_multiple_comments_number($content){
 	$content = 'Comments [%d]'; return $content;}
 
-function rid_of_sidebar($bool){return false;}
+function rid_of_sidebar($bool){
+	if(is_page() || is_tax() || is_singular_app()){return false;}
+	elseif(is_home() || is_archive() || is_category() || is_single()){return true;}
+}
 	
 function edit_commentform_args($args){
 

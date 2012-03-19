@@ -18,32 +18,38 @@
 					'post_type' => $device.'-app',
 					'posts_per_page' => 7
 				);
-						
-				$n = 1;
-				if(have_posts()) : 
-					if(is_page()) query_posts($args);
+				$n = 0;
+				if(have_posts()) : if(is_page()) query_posts($args);
 				while(have_posts()) : the_post();
-				
+					$lemeta = array();
 					$lemeta = get_post_custom($post->ID);
-					
+					//pr($lemeta);
+					$screens = array();
 					$x = 0;
 					while($x <= 6) :
-						$img = $lemeta[$device.'-app_screenshot-'.$x.'_thumbnail_id'][0];
-						if($img) $screens[$x] = wp_get_attachment_image_src($img, 'full');
+						$img = "";
+						if($x == 0){
+							$img = get_post_meta(get_the_ID(), '_thumbnail_id', true);
+							if($img){$screens[] = wp_get_attachment_image_src($img, 'full');}
+						} else {
+							$img = get_post_meta(get_the_ID(), $device.'-app_screenshot-'.$x.'_thumbnail_id', true);
+							if($img){
+								$screens[] = wp_get_attachment_image_src($img, 'full');
+							}
+						}
 					$x++;
+					
 					endwhile;
 					
-					//pr($lemeta);
 					if($device == 'ipad'){
-						if($lemeta['horizontal-ipad-app']){
+						if($lemeta['horizontal-ipad-app'][0] == "horizontal-app"){
 							$device = 'ipad-app-horizontal';
 							$w      = 430;
 							$h      = 320;
 						} else {
 							$device = 'ipad-app-vertical';
 							$h      = 430;
-							$w      = 320;
-						}
+							$w      = 320;}
 					} elseif($device == 'iphone'){
 						$w = 211;
 						$h = 316;
@@ -63,11 +69,12 @@
 				<li class="parent-scroll-item <?php echo $device.'-scroll-item'; ?>">
 					<div class="device-bg">
 						<div class="slider-images">
-							<div class="screenshot-scroll-container">
+							<div class="screenshot-scroll-container" id="sssc-<?php echo $n; ?>">
 								<ul class="screenshot-scroll-items">
 									<?php $o = 0; foreach($screens as $screen) : ?>
 										<li class="screenshot-scroll-item">
 											<div class="scroller-screenshot">
+												<?php //pr($screens); ?>
 												<?php echo '<img src="'.get_bloginfo('stylesheet_directory').'/thumbs/thumb.php?src='. $screen[0].'&w='.$w.'&h='.$h.'" alt="Screenshot '.$o.'">'; ?>
 											</div>
 										</li>
@@ -78,7 +85,7 @@
 					</div>
 					<div class="slider-content">
 						<span class="date">Today's App 7th July 2010</span>
-						<h2 class="app-name"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+						<h2 class="app-name"><?php //pr($lemeta['horizontal-ipad-app']); ?><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 						<span class="developer">Developed by <a href="<?php echo $lemeta['app-developer-link'][0]; ?>"><?php echo $lemeta['app-developer'][0]; ?></a></span>
 						<span class="price">Price <?php echo $lemeta['price-of-app'][0]; ?></span>
 						<a href="<?php the_permalink(); ?>" class="expand-info">Info</a>
@@ -88,8 +95,8 @@
 						<div class="social-appstore-row">
 							<a href="#" class="twitter-link">Twitter this</a>
 							<a href="#" class="facebook-link">Facebook this</a>
-							<a href="#" class="email-link">Email this</a>
-							<a href="#" class="appstore-link">Twitter this</a>
+							<a href="" class="email-link">Email this</a>
+							<a href="<?php echo get_post_meta($post->ID, 'appstore-link', true); ?>" class="appstore-link">Twitter this</a>
 							
 						</div>
 						<?php if(!is_singular()) : ?>
@@ -101,7 +108,7 @@
 						<?php endif; ?>
 					</div>
 				</li>
-			<?php $n++; endwhile; endif; ?>
+			<?php $n++; unset($lemeta); endwhile; endif; wp_reset_query(); ?>
 		</ul>
 	</div>
 </div>

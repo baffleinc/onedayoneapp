@@ -8,9 +8,16 @@
 				items: '.parent-scroll-items',
 				next:	'.parent-next',
 				prev:	'.parent-prev',
-				easing:'easeOutBounce',
-				speed: 1500
+				easing:'easeInOutExpo',
+				speed: 1000
 			});
+			
+			p_api = parent_scroller.data("scrollable");
+//			p_api.onBeforeSeek(function(o,i){
+//				var ii = i-1;
+//				$('#sssc-'+ii).data("scrollable").stop();
+//				$('#sssc-'+ii).data("scrollable").play();
+//			});
 			
 			latest_post_scrollers = $('.latest-posts-scroller-container');
 			latest_post_scrollers.each(function(i){
@@ -18,9 +25,8 @@
 					.addClass('lps-'+i)
 					.scrollable({
 					items: '.lps-'+i+' .latest-posts-scroller-items',
-					vertical: true,
-					circular: true
-				}).autoscroll(5000);
+					circular: true,
+				}).autoscroll({interval: 5000});
 			});
 		
 			$('.scroll_ctrl').click(function(event){
@@ -29,20 +35,19 @@
 			
 			function commence_screenshot_scrolling(){
 				$('.screenshot-scroll-container').each(function(i){
-				
-					var scroll_api = $(this).data("scrollable");
-					
 					$(this)
 						.addClass('scroll-item-'+i)
 						.scrollable({
 							items: '.scroll-item-'+i+' .screenshot-scroll-items',
 							circular: true,
-							disabledClass: 'disabled-scroller-nav'})
+							disabledClass: 'disabled-scroller-nav'
+							})
 						.autoscroll({interval: 1000, autoplay: false});
 					var scroll_api = $(this).data("scrollable");
 					if(i == 0){
 						scroll_api.play();
 					}
+					
 				});
 			}
 			
@@ -54,7 +59,8 @@
 				$('.expand-info').addClass('turn-x');
 			}
 			
-			$('.expand-info').click(function(){
+			$('.expand-info').click(function(e){
+				e.preventDefaultm();
 				if($(this).hasClass('open')){
 					$(this).animate({paddingTop: 0}, 300).next('.info').fadeOut(300);
 					$(this).siblings('.app-name').animate({top: 0}, 300);
@@ -64,6 +70,7 @@
 					$(this).siblings('.app-name').animate({top: -80}, 700, 'easeOutExpo');
 					$(this).addClass('open');
 				}
+				return false;
 			});
 		
 			commence_screenshot_scrolling();
@@ -147,14 +154,102 @@
 			$('#app-grid li a img').height(aw);
 		}
 		
-		resize_image();
+		function center_image(){
+			aw = $('#app-grid li a').width();
+		}
+		
+		function resizerz(){
+			resize_image();
+			center_image();
+		}
 		
 		$(window).resize(function(){
-			resize_image();
+			resizerz();
 		});		
 		
+		//ON ARCHIVE PAGE
 		
+		$('.archive #content #nav-below a').live('click', runLoad);
 		
-		//$('#result').load('ajax/test.html #container');
+		function runLoad(e){
+			e.preventDefault();
+			loadIt($(this));
+		}
+		
+		if($('#app-grid-wrapper')){
+				aw = $('#app-grid li a').width();
+				$('#app-grid li a img').height(aw);
+		}
+		
+		function loadIt(elem){
+			$('#app-grid-wrapper').addClass('laters');
+			href = $(elem).attr('href');
+			$('#grid-container').load(
+				href + ' #app-grid-wrapper',
+				function(r,s,x){
+					aw = $('#app-grid li a').width();
+					$('#app-grid li a img').height(aw);
+					$('.laters').fadeOut(300);
+					$('#app-grid-wrapper').hide().fadeIn(300);
+				}
+			)
+			$('#content').load(href + ' #nav-below');
+		}
 	});
+	
+	
+	// ON HOMEPAGE
+	$('#loading').hide();
+	if($('#TAKETHEWRAPPER')){
+		var first = $('.tabs-tags li:first-child a').attr('href');
+		$('#TAKETHEWRAPPER').load(first+' #app-grid-wrapper', function(){
+		
+			
+				aw = $('#app-grid li a').width();
+				$('#app-grid li a img').height(aw);
+		});
+		$('#TAKETHENAV').load(first+' #nav-below');
+	}
+	
+	function load_wrapper(e){
+		e.preventDefault();
+		var href = $(this).attr('href');
+		$('#app-grid-wrapper').fadeOut(300);
+		$('#loading').fadeIn(300);
+		$('#TAKETHEWRAPPER').delay(600).load(href+' #app-grid-wrapper', function(){
+			$('#loading').fadeOut(300);
+			$('#app-grid-wrapper').hide().fadeIn();
+			aw = $('#app-grid li a').width();
+			$('#app-grid li a img').height(aw);
+		});
+		$('#TAKETHENAV').load(href+' #nav-below');
+	}
+	
+	$('.tabs-tags li a, #TAKETHENAV a').live("click", load_wrapper);
+	
+	$('#header-archives-inner, .header-categories ul').hide();
+	
+	$('.catc').toggle(function(){
+		if($('#header-archives-inner').is(':visible')){
+			$('#header-archives-inner').slideUp();
+		}
+		$('.header-categories ul').slideDown(1000, 'easeOutExpo');
+	}, function(){
+		$('.header-categories ul').slideUp(1000, 'easeOutExpo');
+		if($('#header-archives-inner').is(':visible')){
+			$('#header-archives-inner').slideUp();
+		}
+	});
+	$('.datec').toggle(function(){
+		if($('.header-categories ul').is(':visible')){
+			$('.header-categories ul').slideUp();
+		}
+		$('#header-archives-inner').slideDown(1000, 'easeOutExpo');
+	}, function(){
+		if($('.header-categories ul').is(':visible')){
+			$('.header-categories ul').slideUp();
+		}
+		$('#header-archives-inner').slideUp(1000, 'easeOutExpo');
+	});
+	
 })(jQuery);

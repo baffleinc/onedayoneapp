@@ -21,13 +21,14 @@
  add_action('thematic_header','add_custom_menus', 6);
  add_action('thematic_footer', 'custom_footer', 30);
  add_action('thematic_belowheader', 'add_slider_to_home', 1);
- add_action('thematic_belowheader', 'search_module', 2);
  add_action('thematic_belowheader', 'app_grid', 3);
  add_action('thematic_abovecontainer', 'singular_apps');
  add_action('wp_head', 'add_wake_up_call_header');
  add_action('thematic_belowpost', 'custom_contact_page');
  add_action('wp_head', 'handle_contact_form');
  add_action('thematic_abovecontent', 'archive_page_header');
+ add_action('wp_head', 'ie7js');
+ add_action('thematic_belowheader', 'search_thing');
 
  
  /**
@@ -76,15 +77,10 @@ function add_slider_to_home(){
 	}
 }
 
-function search_module(){
-	if(is_page(4921)) {
-	include('includes/search-module.php');
-	}
-}
-
 function app_grid(){
-	if(is_page('iPad') || is_front_page()) {
-		include('includes/app-grid.php');
+	if(is_app_home()) {
+		include('includes/search-module.php');
+		include('includes/home-grid.php');
 	}
 }
 
@@ -126,8 +122,28 @@ function childtheme_override_search_loop(){
 }
 
 function archive_page_header(){
-	include_once('includes/archive-header.php');
-	include_once('includes/app-grid.php');
+	$taxes = array();
+	$types = array('iphone-app', 'ipad-app', 'mac-app');
+	foreach($types as $type){
+		$taxes[] = $type.'-category';
+		$taxes[] = $type.'-tags';
+	}
+	if(is_post_type_archive($types) || is_tax()){
+		include_once('includes/archive-header.php');
+		include_once('includes/app-grid.php');
+	}
+}
+
+function ie7js(){
+	echo '<!--[if lt IE 9]>
+	<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
+	<![endif]-->';
+}
+
+function search_thing(){
+	if(is_search()){
+		include_once('includes/search-head.php');
+	}
 }
 
 ?>

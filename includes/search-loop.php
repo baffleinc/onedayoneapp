@@ -1,15 +1,20 @@
 <?php 
 		while ( have_posts() ) : the_post(); 
 				
-						thematic_abovepost(); ?>
-		
-						<div id="post-<?php the_ID();?>" <?php post_class(); ?>>
+						thematic_abovepost();
+						 //pr(get_post(the_ID()));
+						  ?>
+						
+						<div id="post-<?php the_ID();?>" class="post">
 					
-		     				<?php //thematic_postheader(); ?>
+		     				<?php //pr(get_post(the_ID()))
+		     				  //thematic_postheader(); ?>
 							<div class="entry-content">
 		
 								<div class="post-thumb">
-									
+									<a href="<?php the_permalink(); ?>"><?php $img = wp_get_attachment_image_src(get_post_meta(get_the_ID(), '_thumbnail_id', true)); ?>
+										<img src="<?php echo $img[0]; ?>" alt="" />
+									</a>
 								</div>
 								<div class="post-info">
 									<h2 class="entry-title">
@@ -26,6 +31,7 @@
 		
 							</div><!-- .entry-content -->
 							<?php //thematic_postfooter(); ?>
+							<div class="clearfix"></div>
 						</div><!-- #post -->
 		
 					<?php 

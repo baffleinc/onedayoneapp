@@ -33,7 +33,7 @@ class optionsLAB{
 	
 	public function do_the_tags(){
 		extract($_POST);
-		
+		delete_option($type.'_homepage_tags');
 		if(update_option($type.'_homepage_tags', $info)){
 			echo 'success';
 		} else {
@@ -45,7 +45,7 @@ class optionsLAB{
 	
 		register_setting('my_new_setting_id', 'My setting group title', array($this, 'boss_validate'));
 		add_settings_section('my_new_section', 'Sweet as section', array($this, 'boss_says_NO'), $this->slug);
-		echo $this->slug;
+		
 		add_settings_field(
 			'my_field_id',
 			'My field Title',
@@ -132,24 +132,24 @@ class optionsLAB{
 															else : 
 																$letypes = array('ipad', 'iphone', 'mac');
 																foreach($letypes as $type) :
-																
+																	$tags = array();
+																	$terms = array();
 																	//selected ones
 																	$tags = get_option($type.'_homepage_tags');
 																	
 																	//all of them
 																	$terms = get_terms($type.'-app-tags', array('exclude' => $tags));
+																	//pr($terms);
 														?>
 																	<div class="device-section" id="section-<?php echo $type; ?>">
 																		<h3>Available Tags</h3>
 																		<div class="tag-bay">
-																			<ul id="" class="<?php echo $type; ?>ConnectedSortable tag-bay-list sortable">
-																				<?php 
-																					foreach($terms as $term) :
-																				?>
+																			<ul data-list="tag-bay" class="<?php echo $type; ?>ConnectedSortable tag-bay-list sortable <?php if(!$terms[0]){echo 'empty';} ?>">
+																				<?php if($terms): foreach($terms as $term) : ?>
 																					<li id="<?php echo $term->term_id; ?>">
 																						<?php echo $term->name; ?>
 																					</li>
-																				<?php endforeach; ?>
+																				<?php endforeach; endif; ?>
 																			</ul>
 																			<div class="clearfix"></div>
 																		</div>
@@ -157,7 +157,7 @@ class optionsLAB{
 																		<div class="active-tags">
 																			<div class="tags-loading">&nbsp;</div>
 																			<div class="tags-done">&nbsp;</div>
-																			<ul class="<?php echo $type; ?>ConnectedSortable active-tags-list sortable">
+																			<ul data-list="active-tags" class="<?php echo $type;?>ConnectedSortable active-tags-list sortable <?php if(!$tags[0]){echo 'empty';} ?>">
 																				<?php 
 																					if($tags) :
 																						foreach($tags as $tag) :
@@ -166,8 +166,6 @@ class optionsLAB{
 																							echo $tag->name;
 																							echo '</li>';
 																						endforeach;
-																					else : 
-																						echo '<li class="empty">Drag tag here</li>';
 																					endif;
 																				?>
 																				

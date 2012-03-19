@@ -9,29 +9,24 @@ class metaboxLAB{
 	public $boss_images;
 	
 	function __construct($name, $post_type = null, $machine_args = null){
-		$this->registered_images = array();
-		//added this in for array entry
-		if(is_array($post_type)) :
-			foreach($post_type as $type) : 
+		if(is_array($post_type)) {
+			foreach($post_type as $type){ 
 				$this->post_types[] = $type;
-			endforeach;
-		//
-		elseif(!$post_type) : $this->post_types[] = 'post';
-		
-		else : $this->post_types[] = $post_type;
-			
-		endif;
+			}
+		}
+		elseif(!$post_type){ $this->post_types[] = 'post'; }
+		else { $this->post_types[] = $post_type; }
 		
 		$this->boss_images = array();
 		
-		foreach($machine_args as $field) :
+		foreach($machine_args as $field){
 			if($field['type'] == 'image'){
-				foreach($this->post_types as $type) :
+				foreach($this->post_types as $type){
 					$this->registered_images[] = $field['name'];
-				endforeach;
+				}
 			}
 			
-		endforeach;
+		}
 		
 		if(!$machine_args) :
 			$machine_args = array(
@@ -48,17 +43,15 @@ class metaboxLAB{
 			'id'	=> sanitize_title($name),
 			'post_types' => $this->post_types,
 			'opts'		=> $machine_args,
-		);//added plural post types
+		);
 		
 		$this->registered_fields = array();
 		
 		add_action('admin_init', array($this, 'boss_meta_init'));
-		//add_action('admin_init', array($this, 'add_the_damn_image'));
 		add_action('save_post', array($this, 'boss_save_meta'));
 	}
 	
 	public function boss_meta_init(){
-		//added this shit in
 		
 		foreach($this->post_types as $post_type) :
 
@@ -69,25 +62,9 @@ class metaboxLAB{
 		    	$post_type,
 		    	'advanced',
 		    	'low'
-		    );//changed $this->box['post_type'] to $type for foreach
+		    );
 		endforeach;	
 	}
-	
-	/*public function add_the_damn_image(){
-	
-		foreach($this->registered_images as $name) :
-			foreach($this->post_types as $type) :
-		    	new MultiPostThumbnails(
-		    	    array(
-		    	    	'label' => $name,
-		    	    	'id' => sanitize_title($name),
-		    	    	'post_type' => $type
-		    	    )
-		    	);
-		    endforeach;
-		endforeach;
-	
-	}*/
 	
 	public function boss_metabox_machine(){
 		global $post;
@@ -221,20 +198,7 @@ class metaboxLAB{
 					
 				
 		<?php 	break;
-		
-				case 'dselect' : ?>
-				<?php //THIS CODE IS HIGHLY EXPLOSIVE AND NEEDS TO BE TAILORED TO THE THEME ?>
-						<p>
-							<label for="<?php echo $field['id']; ?>"><?php echo $feature['label']; ?></label>
-							<select name="<?php echo $feature['id']; ?>" id="<?php echo $feature['id']; ?>">
-							<?php $selopts= array('no' => 0, 'yes'=> 1); ?>
-								<?php foreach($selopts as $opt => $val) : ?>
-									<option value="<?php echo $val; ?>"<?php if($hm[$feature['id']][0] == $val) : echo ' selected="selected"'; endif; ?>><?php echo $opt; ?></option>
-								<?php endforeach; ?>
-							</select>
-						</p>
-		<?php 	break;
-			
+					
 			}
 			
 			//This adds every single field that IS rendered to a list.
