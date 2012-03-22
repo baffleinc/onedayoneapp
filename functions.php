@@ -42,6 +42,14 @@ wp_register_script(
 );
 
 wp_register_script(
+	'jquery.waitforimages',
+	get_bloginfo('stylesheet_directory').'/js/jquery.waitforimages.js',
+	array('jquery'),
+	'0.1',
+	true
+);
+
+wp_register_script(
 	'jquery.onedayoneapp',
 	get_bloginfo('stylesheet_directory').'/js/jquery.onedayoneapp.js',
 	array('jquery', 'jquery.tools'),
@@ -53,6 +61,7 @@ wp_enqueue_script('jquery.tools');
 wp_enqueue_script('jquery.easing');
 wp_enqueue_script('jquery.validate');
 wp_enqueue_script('jquery.placeholder');
+wp_enqueue_script('jquery.waitforimages');
 wp_enqueue_script('jquery.onedayoneapp');
 
 function pr($array){

@@ -1,6 +1,12 @@
 (function($){
 	$(function(){
-	
+		
+		$('.device-bg').waitForImages(loadiPad);
+		
+		function loadiPad(){
+			$('.hideTheSlide').fadeOut(500);
+		}
+		
 		$.Placeholder.init();
 		
 			parent_scroller = $('.parent-scroll-container');

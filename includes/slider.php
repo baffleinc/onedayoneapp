@@ -6,6 +6,7 @@
 ?>
 
 <div id="slider">
+	<div class="hideTheSlide">&nbsp;</div>
 	<span class="height-<?php echo $device; ?>">&nbsp;</span>
 	<?php if(!is_singular_app()) : ?>
 		<a href="#" class="parent-prev scroll_ctrl">&lsaquo;</a>
