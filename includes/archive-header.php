@@ -24,8 +24,8 @@
 	</div>
 		<form name="search" class="search" action="<?php bloginfo('url'); ?>" method="post">
 			<p>
-				<input type="text" name="search-query" class="search-query" value="<?php echo $_REQUEST['s']; ?>" />
-				<label for="search">Search</label>
+				<input type="text" name="s" class="search-query" value="<?php echo $_REQUEST['s']; ?>" />
+				<label for="s">Search</label>
 			</p>
 		</form>
 		

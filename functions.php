@@ -6,8 +6,7 @@ require_once('filters.php');
 require_once('boss/boss.php');
 
 add_theme_support( 'post-thumbnails' );
-add_image_size( 'square_thumb', 300, 300, false );
-set_post_thumbnail_size( 200, 200 );
+add_image_size( 'square_thumb', 300, 300, true );
 
 wp_register_script(
 	'jquery.tools',
@@ -85,6 +84,17 @@ function array_empty($mixed) {
 }
 
 add_action('admin_print_styles', 'style_like_a_boss');
+
+
+	register_sidebar(array(
+		'id' => 'jobsbar',
+		'name' => 'Jobs Sidebar',
+		'description' => __( 'Sidebar for the jobs board page.' ),
+		'before_widget' => '<li id="%1$s" class="widget %2$s">',
+		'after_widget' => '</li>',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>'
+	));
 
 function style_like_a_boss(){
 	echo '<link rel="stylesheet" href="'.get_bloginfo('stylesheet_directory').'/boss/admin.css" type="text/css" media="screen">';

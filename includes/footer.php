@@ -1,4 +1,4 @@
-<?php if(!is_singular_app()) : ?>
+<?php if(!is_singular_app() || is_home()) : ?>
 <div id="nearly-bottom">
 	<div class="container_12">
 		<div class="grid_4" id="wake-up-call">

@@ -17,7 +17,7 @@ function change_multiple_comments_number($content){
 
 function rid_of_sidebar($bool){
 	if(is_page() || is_tax() || is_singular_app()){return false;}
-	elseif(is_home() || is_archive() || is_category() || is_single()){return true;}
+	elseif(is_home() || is_archive() || is_category() || is_single() || is_page('Job Board')){return true;}
 }
 	
 function edit_commentform_args($args){

@@ -22,35 +22,16 @@
 				$n = 0;
 				if(have_posts()) : if(is_page()) query_posts($args);
 				while(have_posts()) : the_post();
-					$lemeta = array();
-					$lemeta = get_post_custom($post->ID);
-					//pr($lemeta);
-					$screens = array();
-					$x = 0;
-					while($x <= 6) :
-						$img = "";
-						if($x == 0){
-							$img = get_post_meta(get_the_ID(), '_thumbnail_id', true);
-							if($img){$screens[] = wp_get_attachment_image_src($img, 'full');}
-						} else {
-							$img = get_post_meta(get_the_ID(), $device.'-app_screenshot-'.$x.'_thumbnail_id', true);
-							if($img){
-								$screens[] = wp_get_attachment_image_src($img, 'full');
-							}
-						}
-					$x++;
-					
-					endwhile;
 					
 					if($device == 'ipad'){
-						if($lemeta['horizontal-ipad-app'][0] == "horizontal-app"){
-							$device = 'ipad-app-horizontal';
+						$ledevice = 'ipad-app-vertical';
+						$h      = 430;
+						$w      = 320;
+						if(get_post_meta(get_the_ID(), 'horizontal-ipad-app', true)) {
+							$ledevice = 'ipad-app-horizontal';
 							$w      = 430;
 							$h      = 320;
-						} else {
-							$device = 'ipad-app-vertical';
-							$h      = 430;
-							$w      = 320;}
+						}
 					} elseif($device == 'iphone'){
 						$w = 211;
 						$h = 316;
@@ -65,9 +46,24 @@
 					$last = array_pop($t);
 					$t[] = substr($last, 0, -1);
 					
-									
+					$screens = array();
+					$x = 0;
+					while($x <= 6){
+						if($x==0){
+							$image = wp_get_attachment_image_src(get_post_meta(get_the_ID(), '_thumbnail_id', true), 'large');
+							$screens[0] = $image[0];
+							$derp = $image[0];
+						} else {
+							$image = wp_get_attachment_image_src(get_post_meta(get_the_ID(), 'ipad-app_screenshot-'.$x.'_thumbnail_id', true),  'large');
+							if($image) $screens[] = $image[0];
+						}
+					$x++;}
+					$shit['dev-link'] = get_post_meta(get_the_ID(), 'app-developer-link', true);
+					$shit['dev'] = get_post_meta(get_the_ID(), 'app-developer', true);
+					$shit['price'] = get_post_meta(get_the_ID(), 'price-of-app', true);
+					$shit['appstore'] = get_post_meta(get_the_ID(), 'appstore-link', true);
 			?>
-				<li class="parent-scroll-item <?php echo $device.'-scroll-item'; ?>">
+				<li class="parent-scroll-item <?php echo $ledevice.'-scroll-item'; ?>">
 					<div class="device-bg">
 						<div class="slider-images">
 							<div class="screenshot-scroll-container" id="sssc-<?php echo $n; ?>">
@@ -75,8 +71,7 @@
 									<?php $o = 0; foreach($screens as $screen) : ?>
 										<li class="screenshot-scroll-item">
 											<div class="scroller-screenshot">
-												<?php //pr($screens); ?>
-												<?php echo '<img src="'.get_bloginfo('stylesheet_directory').'/thumbs/thumb.php?src='. $screen[0].'&w='.$w.'&h='.$h.'" alt="Screenshot '.$o.'">'; ?>
+												<?php echo '<img src="'.get_bloginfo('stylesheet_directory').'/thumbs/thumb.php?src='. $screen.'&w='.$w.'&h='.$h.'" alt="Screenshot '.$o.'">'; ?>
 											</div>
 										</li>
 									<?php $o++; endforeach; ?>
@@ -86,9 +81,11 @@
 					</div>
 					<div class="slider-content">
 						<span class="date">Today's App 7th July 2010</span>
-						<h2 class="app-name"><?php //pr($lemeta['horizontal-ipad-app']); ?><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-						<span class="developer">Developed by <a href="<?php echo $lemeta['app-developer-link'][0]; ?>"><?php echo $lemeta['app-developer'][0]; ?></a></span>
-						<span class="price">Price <?php echo $lemeta['price-of-app'][0]; ?></span>
+						<h2 class="app-name"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+						<span class="developer">Developed by <a href="<?php echo $shit['dev-link']; ?>"><?php echo $shit['dev']; ?></a></span>
+						
+						<span class="price">Price <?php echo $shit['price']; ?></span>
+						
 						<a href="<?php the_permalink(); ?>" class="expand-info">Info</a>
 						<div class="info">
 							<p color="white"><?php the_content(); ?></p>
@@ -97,7 +94,7 @@
 							<a href="#" class="twitter-link">Twitter this</a>
 							<a href="#" class="facebook-link">Facebook this</a>
 							<a href="" class="email-link">Email this</a>
-							<a href="<?php echo get_post_meta($post->ID, 'appstore-link', true); ?>" class="appstore-link">Twitter this</a>
+							<a href="<?php echo $shit['appstore']; ?>" class="appstore-link">Appstore Link</a>
 							
 						</div>
 						<?php if(!is_singular()) : ?>

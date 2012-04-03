@@ -29,6 +29,8 @@
  add_action('thematic_abovecontent', 'archive_page_header');
  add_action('wp_head', 'ie7js');
  add_action('thematic_belowheader', 'search_thing');
+ add_action('thematic_belowcontainer', 'jobs_sidebar');
+ add_action('thematic_belowheader', 'jobs_header');
 
  
  /**
@@ -146,4 +148,20 @@ function search_thing(){
 	}
 }
 
-?>
+function jobs_sidebar(){
+	if(is_page(5461)){ ?>
+		<aside id="jobs-bar" class="sidebar">
+			<ul>
+				<?php dynamic_sidebar('jobsbar'); ?>
+			</ul>
+		</aside>
+	<?php }
+}
+
+function jobs_header(){
+	if(is_page(5461)){
+		include_once('includes/jobs-header.php'); 
+	}
+}
+
+ ?>

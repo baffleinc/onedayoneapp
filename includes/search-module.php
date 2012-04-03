@@ -12,7 +12,7 @@
 			<form name="search" class="search" action="<?php bloginfo('url'); ?>" method="post">
 			
 				<p>
-					<input type="text" name="search-query" class="search-query" />
+					<input type="text" name="s" id="s" class="search-query" />
 					<label for="search">Search</label>
 				</p>
 			</form>
