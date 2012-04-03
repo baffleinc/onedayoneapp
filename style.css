@@ -1773,7 +1773,8 @@ pre{
 }
 
 #jobs-bar{
-	float: left;
+	float: right;
+	width: 240px;
 }
 
 .page-id-5461{
@@ -1782,6 +1783,10 @@ pre{
 
 .page-id-5461{
 	color: black;
+}
+
+.page-id-5461 .entry-title{
+	display: none;
 }
 
 #jobs-header{
@@ -1795,6 +1800,28 @@ pre{
 	width: 960px;
 }
 
+.page-id-5461 #container{
+	width: 690px;
+}
+
+#wpjb-job-list{
+	font-family: "HelveticaNeue", Helvetica, sans-serif;
+}
+
+#wpjb-job-list td.wpjb-column-title a {
+	text-decoration: none;
+	font-size: 18px;
+	color: #1b75ba;
+}
+
+#wpjb-job-list td.wpjb-column-title {
+	padding: 20px 10px!important;
+}
+
+.page-id-5461 #content{
+	width: 100%;
+}
+
 #jobs-header h1{
 	float: left;
 }
@@ -1804,6 +1831,16 @@ pre{
 	font-weight: DINPROLight;
 	color: white;
 	text-decoration: none;
+}
+
+#wpjb-job-list td:not(:first-child){
+	vertical-align: middle!important;
+}
+#wpjb-job-list td small{
+	font-size: 11px;
+}
+small.wpjb-sub {
+	color: #696969;
 }
 
 #jobs-header .menu{
@@ -1829,16 +1866,111 @@ pre{
 	clear: both;
 }
 
+.jobs-title{
+	font-size: 28px;
+	margin: 40px 0;
+	padding-top: 75px;
+	color: #a1a1a1;
+}
 
+#jobs-bar .widget_wpjb-search{
+	position: absolute;
+	top: 40px;
+	left: 0;
+}
 
+#jobs-bar .widget_wpjb-search h3{
+	display: none;
+}
 
+#jobs-bar .widget_wpjb-search input[type=text]{
+color: #ccc;
+text-transform: uppercase;
+display: inline-block;
+height: 28px;
+width: 335px;
+line-height: 30px;
+padding-left: 15px;
+padding-right: 15px;
+border-radius: 13px;
+	background: #404041;
+z-index: 8;
+border: 0;
+font-family: DINPROLight;
+text-align: left;
+}
 
+#jobs-bar .widget_wpjb-search input[type=submit]{
+background: none;
+border: none;
+height: 32px;
+border-radius: 18px;
+font-family: DINPROLight;
+text-transform: uppercase;
+line-height: 32px;
+padding-right: 20px;
+color: #696969;
+text-indent: 15px;
+margin-right: -35px;
+position: relative;
+z-index: 9;
 
+}
 
+#jobs-bar ul{
+	margin: 0;
+}
 
+#jobs-bar .widget_wpjb-job-types{
+	position: absolute;
+	top: 135px;
+	left: -20px;
+}
 
+#jobs-bar .widget_wpjb-job-types h3{
+	display: none;
+}
 
+#jobs-bar .widget_wpjb-job-types li{
+	float: left;
+	list-style: none;
+}
 
+#jobs-bar .widget_wpjb-job-types li a{
+	color: gray;
+	text-decoration: none;
+	display: block;
+	padding: 10px 20px;
+	text-transform: uppercase;
+	font-size: 13px;
+}
 
+#jobs-bar .widget_wpjb-job-types li a:after{
+	content: "|";
+	position: relative;
+	left: 20px;
+}
+#jobs-bar .widget_wpjb-job-types li:last-child a:after{
+	content: "";
+}
+.add-job{
+	display: block;
+	width: 100%;
+	height: 167px;
+	background: url(images/addjob.png) no-repeat center;
+	padding: 30px 0;
+	text-indent: -999em;
+}
 
+.job-sidebar-title{
+	font-size: 28px;
+	line-height: normal;
+}
 
+.wpjb-table th{
+	display: none;
+}
+
+#content{
+	margin-left: 0;
+}
