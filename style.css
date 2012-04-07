@@ -1816,6 +1816,7 @@ pre{
 
 #wpjb-job-list td.wpjb-column-title {
 	padding: 20px 10px!important;
+	width: 300px;
 }
 
 .page-id-5461 #content{
@@ -1836,6 +1837,11 @@ pre{
 #wpjb-job-list td:not(:first-child){
 	vertical-align: middle!important;
 }
+
+#wpjb-job-list .wpjb-last{
+	padding-right: 30px!important;
+}
+
 #wpjb-job-list td small{
 	font-size: 11px;
 }
