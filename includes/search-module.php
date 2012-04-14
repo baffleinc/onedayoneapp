@@ -9,11 +9,11 @@
 	?>
 	<div class="search-wrap">
 		<div class="search-module">
-			<form name="search" class="search" action="<?php bloginfo('url'); ?>" method="post">
+			<form class="search addClasses" action="<?php bloginfo('url'); ?>" method="post">
 			
 				<p>
-					<input type="text" name="s" id="s" class="search-query" />
-					<label for="search">Search</label>
+					<input type="text" class="search-query" placeholder="Search" value="<?php echo $_REQUEST['s']; ?>" />
+					<input type="submit" value="Search">
 				</p>
 			</form>
 			<?php if($terms) : ?>

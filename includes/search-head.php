@@ -1,9 +1,9 @@
 <div class="wrapper">
-<form name="s[]" class="search" action="<?php bloginfo('url'); ?>" method="post">
+<form class="search addClasses" action="<?php bloginfo('url'); ?>" method="post">
 	<p>
 		<strong>Search results for:</strong>
-		<input type="text" name="s" id="s" value="<?php echo $_REQUEST['s']; ?>" />
-		<label for="search">Search</label>
+		<input type="text" placeholder="Search" value="<?php echo $_REQUEST['s']; ?>" />
+		<input type="submit" value="Search again">
 	</p>
 </form>
 </div>

@@ -246,4 +246,11 @@
 		$('#header-archives-inner').slideUp(1000, 'easeOutExpo');
 	});
 	
+	$('.addClasses input[placeholder=Search]').bind({
+		"focus": function(){
+			$('input[name=s]').attr('name', "");
+			$(this).attr('name', 's');
+		}
+	});
+	
 })(jQuery);

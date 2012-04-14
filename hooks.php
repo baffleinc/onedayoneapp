@@ -32,6 +32,7 @@
  add_action('thematic_belowcontainer', 'jobs_sidebar');
  add_action('thematic_belowheader', 'jobs_header');
  add_action('thematic_abovecontent', 'jobs_content_header');
+ add_action('thematic_belowpost', 'post_footer');
 
  
  /**
@@ -168,6 +169,12 @@ function jobs_header(){
 function jobs_content_header(){
 	if(is_page(5461)){
 		include_once('includes/jobs-content-header.php'); 
+	}
+}
+
+function post_footer(){
+	if(is_home() || is_singular('post')){
+		include_once('includes/post-footer.php');
 	}
 }
 

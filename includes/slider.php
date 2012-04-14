@@ -67,11 +67,21 @@
 					<div class="device-bg">
 						<div class="slider-images">
 							<div class="screenshot-scroll-container" id="sssc-<?php echo $n; ?>">
+							<?php 
+								if($shit['video-embed'] && $o == $shit['insert-video-after-image']){
+									$vid = $shit['video-embed'];
+								}
+							 ?>
 								<ul class="screenshot-scroll-items">
 									<?php $o = 0; foreach($screens as $screen) : ?>
 										<li class="screenshot-scroll-item">
 											<div class="scroller-screenshot">
+												<?php if($vid) : ?>
+													<iframe class="youtube-player" type="text/html" width="<?php echo $w; ?>" height="<?php echo $h; ?>" src="http://www.youtube.com/embed/<?php echo $vid; ?>" frameborder="0">
+													</iframe>
+												<?php else : ?>
 												<?php echo '<img src="'.get_bloginfo('stylesheet_directory').'/thumbs/thumb.php?src='. $screen.'&w='.$w.'&h='.$h.'" alt="Screenshot '.$o.'">'; ?>
+												<?php endif; ?>
 											</div>
 										</li>
 									<?php $o++; endforeach; ?>

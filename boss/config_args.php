@@ -114,7 +114,7 @@
 		array(
 			'name' => 'Video Embed',
 			'type' => 'text',
-			'desc' => 'Please enter the youtube video embed code here.'
+			'desc' => 'Please enter the youtube video ID here.'
 		),
 		array(
 			'name' => 'Insert Video After Image:',

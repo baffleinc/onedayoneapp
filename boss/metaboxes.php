@@ -72,7 +72,7 @@ class metaboxLAB{
 		echo '<div class="metabox-fields">';
 		//echo '<a href="#" id="show_hide_meta">Show/hide Meta</a>';
 		$theMeta = get_post_custom($post->ID);
-		pr($theMeta);
+		//pr($theMeta);
 		foreach($this->box['opts'] as $field) : 
 			$key = sanitize_title($field['name']);
 			$value = get_post_meta($post->ID, $key, true);
@@ -222,13 +222,20 @@ class metaboxLAB{
 	public function boss_save_meta(){
 		global $post;
 		
+		if ((defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) ||
+		(defined('DOING_AJAX') && DOING_AJAX)
+		|| isset($_REQUEST['bulk_edit'])){
+			return $post_id;
+		} else {
+			$post_id = $post->ID;
+		}
 		//$extra_fields = $_POST['extra_field_ids'];
 	
 		//string to array before we save the options
 		$fields_to_save = explode(', ', get_option('registered_meta_fields'));
 		//array_push($fields_to_save, $post_image_links);
 		foreach($fields_to_save as $field) : 
-			update_post_meta($post->ID, $field, $_POST[$field]);
+			update_post_meta($post_id, $field, $_POST[$field]);
 		endforeach;
 	}
 }
